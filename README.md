@@ -45,9 +45,9 @@ cd linux-5.5.1
 ```
 - Configure and build Linux kernel:
 ```
-make ARCH=arm64 mrproper
-make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- O=../aarch64_build/ nconfig
-make -j24 ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- O=../aarch64_build/
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig
+make ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- menuconfig
+make -jN ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu-
 ```
 
 You will now find the Linux kernel image *Image* in *aarch64_build/arch/arm64/boot/*.
@@ -149,3 +149,19 @@ gzip -c rootfs.img > rootfs.img.gz
 cd aarch64_appliances 
 sudo qemu-system-aarch64 -M virt -cpu cortex-a57 -m 1024 -kernel ./Image -initrd rootfs.img.gz -nographic -append "console=ttyAMA0"
 ```
+
+#### Adding nodejs to rootfs
+- Download and untar aarch64 nodejs binary package:
+```
+wget https://nodejs.org/dist/v17.8.0/node-v17.8.0-linux-arm64.tar.xz
+tar -xf node-v17.8.0-linux-arm64.tar.xz
+```
+- Copy needed binaries and libraries to rootfs:
+```
+cd node-v17.8.0-linux-arm64/bin/
+cp node <PATH_TO>/aarch64_appliances/rootfs/usr/bin/
+cd <PATH_TO>/aarch64_appliances/
+mkdir rootfs/lib/
+cp -r /usr/aarch64-linux-gnu/lib/* rootfs/lib/
+```
+- Boot and try to run node.
