@@ -137,3 +137,15 @@ EOF
 ```
 chmod u+x init
 ```
+- Create a rootfs cpio image:
+```
+cd rootfs
+find . | cpio -o -H newc > ../rootfs.img
+cd ..
+gzip -c rootfs.img > rootfs.img.gz
+```
+- Boot on Qemu:
+```
+cd aarch64_appliances 
+sudo qemu-system-aarch64 -M virt -cpu cortex-a57 -m 1024 -kernel ./Image -initrd rootfs.img.gz -nographic -append "console=ttyAMA0"
+```
