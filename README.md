@@ -164,4 +164,11 @@ cd <PATH_TO>/aarch64_appliances/
 mkdir rootfs/lib/
 cp -r /usr/aarch64-linux-gnu/lib/* rootfs/lib/
 ```
+- Create a rootfs cpio image again:
+```
+cd rootfs
+find . | cpio -o -H newc > ../rootfs.img
+cd ..
+gzip -c rootfs.img > rootfs.img.gz
+```
 - Boot and try to run node.
