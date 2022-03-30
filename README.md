@@ -62,10 +62,6 @@ cd aarch64_appliances
 ```
 sudo apt install binutils-aarch64-linux-gnu gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 ```
-- Copy over the built Linux kernel image:
-```
-scp user@remote:<PATH_TO>/aarch64_build/arch/arm64/boot/Image .
-```
 - Download and untar a version of busybox; this will be used to create the rootfs structure and contents:
 ```
 wget https://busybox.net/downloads/busybox-1.31.1.tar.bz2
@@ -90,6 +86,10 @@ You will now find a basic rootfs structure in *busybox-1.31.1/_install*.
 ```
 cd aarch64_appliances
 ls
+```
+- Copy over the built Linux kernel image:
+```
+scp user@remote:<PATH_TO>/aarch64_build/arch/arm64/boot/Image .
 ```
 - Confirm see the aarch64 Linux image and the busybox build environment:
 ```
